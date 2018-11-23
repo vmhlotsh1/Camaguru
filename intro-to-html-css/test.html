@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:border="http://www.w3.org/1999/xhtml" xmlns:border-radius="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <title>Camagru</title>
@@ -11,16 +11,15 @@
     <div class="main-nav">
         <ul class="nav">
           <li class="name">CAMAGRU</li>
-          <li><a href="login.html">Login</a></li>
           <li><a href="registration/registration.html">Register</a></li>
-          <li><a href="snap.html">Snap</a></li>
+          <li><a href="login.html">Login</a></li>
           <li><a href="#">Gallery</a></li>
         </ul>
     </div>
 
     <header>
-		 <video autoplay="true" id="profile-image" width= "200" height="200" ></video>
-      <h1 class="tag name">Welcome, Vuyo!.</h1>
+		 <img src="images/aditya-romansa-117344-unsplash.jpg" height="200" width="200"></img>
+      <h1 class="tag name">Hello, I’m Vuyo!.</h1>
       <p class="tag location">Johannesburg</p>
     </header>
 
@@ -38,30 +37,16 @@
           <li>Dislike</li>
           <li>Super Like</li>
         </ul>
-      </div> 
-
+      </div>
     </main>
     <footer>
       <ul>
         <li><a href="#" class="social twitter">Twitter</a></li>
         <li><a href="#" class="social linkedin">LinkedIn</a></li>
         <li><a href="#" class="social instagram">Instagram</a></li>
-		<li><a href="#" class="social facebook">Facebook</a></li>
+        <li><a href="#" class="social facebook">Facebook</a></li>
       </ul>
       <p class="copyright">Copyright 2018, Vuyo Mhlotshane</p>
     </footer>
-	<script>
-		var video = document.querySelector("#profile-image");
-
-if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({video: true})
-  .then(function(stream) {
-    video.srcObject = stream;
-  })
-  .catch(function(err0r) {
-    console.log("Something went wrong!");
-  });
-}
-	</script>
   </body>
   </html>

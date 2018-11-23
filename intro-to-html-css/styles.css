@@ -10,6 +10,8 @@ body {
   font-family: 'Roboto', sans-serif;
   color: #ff99ff;
   background: #f7f5f0;
+  background-size: cover;
+  background-position: center;
 }
 /* Link Styles */
 
@@ -62,11 +64,11 @@ header {
 header {
   line-height: 1.5;
 }
-header .profile-image {
+header #profile-image {
   margin-top: 50px;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 335px;
+  height: 255px;
+  border-radius: 150px;
   border: 3px solid white;
   transition: all .5s;
 }
@@ -211,6 +213,23 @@ a.social:hover {
     max-width: 1200px;
     margin: 40px auto;
   }
-
 }
-
+.login-box{
+  width: 320px;
+  height:420px;
+  background:rgba(0,0,0,0.5);
+  color: #fff;
+  top : 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%);
+  box-sizing: border-box;
+}
+.avatar{
+  width:100px;
+  height:100px;
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+}
