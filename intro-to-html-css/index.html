@@ -19,7 +19,7 @@
     </div>
 
     <header>
-		 <video autoplay="true" id="profile-image" width= "200" height="200" ></video>
+		 <img src="images/placeholder.png" id="profile-image" width= "200" height="200">
       <h1 class="tag name">Welcome, Vuyo!.</h1>
       <p class="tag location">Johannesburg</p>
     </header>
@@ -38,30 +38,12 @@
           <li>Dislike</li>
           <li>Super Like</li>
         </ul>
-      </div> 
+      </div>
 
     </main>
-    <footer>
-      <ul>
-        <li><a href="#" class="social twitter">Twitter</a></li>
-        <li><a href="#" class="social linkedin">LinkedIn</a></li>
-        <li><a href="#" class="social instagram">Instagram</a></li>
-		<li><a href="#" class="social facebook">Facebook</a></li>
-      </ul>
+  <footer>
       <p class="copyright">Copyright 2018, Vuyo Mhlotshane</p>
     </footer>
-	<script>
-		var video = document.querySelector("#profile-image");
 
-if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({video: true})
-  .then(function(stream) {
-    video.srcObject = stream;
-  })
-  .catch(function(err0r) {
-    console.log("Something went wrong!");
-  });
-}
-	</script>
   </body>
   </html>

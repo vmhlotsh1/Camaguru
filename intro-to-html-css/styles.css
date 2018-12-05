@@ -233,3 +233,24 @@ a.social:hover {
   top: -50px;
   left: calc(50% - 50px);
 }
+
+.bigview>video{
+  width: -webkit-fill-available !important;
+  height: -webkit-fill-available !important;
+}
+
+.bigview{
+  width: 50%;
+  display: block;
+  margin: auto;
+}
+
+.bigview>.sticker{
+  position: absolute;
+  max-width: 25%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}

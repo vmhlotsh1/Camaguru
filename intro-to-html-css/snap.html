@@ -19,20 +19,38 @@
 </div>
 
 <header>
-	<video autoplay="true" id="profile-image" width= "200" height="200" ></video>
-	<ul class="skills">
-	<li><a class="tag location">Snap</a></li>
-	<li><a class="tag location">Save</a></li>
+	<div class="preview">
+		<video autoplay="true" id="profile-image" ></video>
+	</div>
+		<ul class="skills">
+	<li><a onclick="takeSnap(event)" class="tag location">Snap</a></li>
+	<li><a class="tag location">Add</a></li>
 	<li><a class="tag location">Delete</a></li>
 		</ul>
 </header>
 
 <main class="flex">
 	<div class="card">
-		<h2>Add Filter</h2>
+		<h2>Add Stickers</h2>
+		<div class="row">
+			<ul class="skills">
+			<!--<div class="column">-->
+				<img src="images/heart_skelton.png" style="width:25%">
+			<!--</div>-->
+			<!--<div class="column">-->
+				<img src="images/mac_skelton.png" style="width:25%">
+			<!--</div>-->
+			<!--<div class="column">-->
+				<img src="images/cute_skelton.png" style="width:27%">
+			<!--</div>-->
+				<!--<div class="column">-->
+					<img src="images/watermelon.png" style="width:27%">
+				<!--</div>-->
+			</ul>
+		</div>
 		<script>
             var video = document.querySelector("#profile-image");
-
+			var preview = document.querySelector(".preview")
             if (navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({video: true})
                     .then(function(stream) {
@@ -42,8 +60,21 @@
                         console.log("Something went wrong!");
                     });
             }
+
+            function takeSnap(event){
+                event.target.parentNode.style.display = "None"
+				preview.classList.add("bigview")
+            }
+
+            function addSticker(event){
+                im = new Image()
+				im.src = event.target.getAttribute("src")
+				im.classList.add("sticker")
+				preview.appendChild(im)
+			}
+
+            document.querySelectorAll(".skills>img").forEach(f => {f.addEventListener("click", addSticker)})
 		</script>
-		<p>I’ve been a professional cook  and am a life-long learner who's always interested in expanding my skills and I love taking pictures</p>
 	</div>
 
 	<div class="card">
