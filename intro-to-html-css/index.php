@@ -1,3 +1,6 @@
+<?PHP
+   include_once ('config/database.php');
+?>
 <!doctype html>
 <html lang="en">
 <head>
