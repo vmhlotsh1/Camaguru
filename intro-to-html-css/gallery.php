@@ -150,7 +150,7 @@
 
             output.value = parseInt(output.value,10) + 1;
             xhttp = new XMLHttpRequest();
-            xhttp.open("POST", '/Camagru/like.php');
+            xhttp.open("POST", '/camagru/like.php');
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
             xhttp.onreadystatechange = function() {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Camagru</title>
+	<title>camagru</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css">
 	<link href="https://fonts.googleapis.com/css?family=Muli%7CRoboto:400,300,500,700,900" rel="stylesheet"></head>
@@ -11,9 +11,9 @@
 <div class="main-nav">
 	<ul class="nav">
 		<li class="name">CAMAGRU</li>
-		<li><a href="login.html">Login</a></li>
-		<li><a href="registration/registration.html">Register</a></li>
-		<li><a href="snap.html">Snap</a></li>
+		<li><a href="login.php">Login</a></li>
+		<li><a href="registration/registration.php">Register</a></li>
+		<li><a href="snap.php">Snap</a></li>
 		<li><a href="#">Gallery</a></li>
 	</ul>
 </div>
