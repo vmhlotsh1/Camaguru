@@ -32,10 +32,7 @@
 <div class="main-nav">
 	<ul class="nav">
 		<li class="name">CAMAGRU</li>
-		<li><a href="login.php">Login</a></li>
-		<li><a href="registration/registration.php">Register</a></li>
-		<li><a href="snap.php">Snap</a></li>
-		<li><a href="#">Gallery</a></li>
+        <li><a href="logout.php">Log Out</a></li>
 	</ul>
 </div>
 

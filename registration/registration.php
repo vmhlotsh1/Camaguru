@@ -1,94 +1,23 @@
-<?php
-include_once ('config/database.php');
-include_once 'error_checking.php';
-
-    if (isset($_POST['submit'])){
-
-        $form_errors = array();
-        $required_fields = array('fname', 'lname', 'email', 'username', 'password');
-        $form_errors = array_merge($form_errors, check_empty_fields($required_fields));
-        $fields_to_check_length = array('username' => 4, 'password' => 6);
-        $form_errors = array_merge($form_errors, check_min_length($fields_to_check_length));
-        $form_errors = array_merge($form_errors, check_email($_POST));
-        if (empty($form_errors)){
-
-            $fname = htmlEntities($_POST['fname']);
-            $lname = htmlEntities($_POST['lname']);
-            $username = htmlEntities($_POST['username']);
-            $email = htmlEntities($_POST['email']);
-            $pass = htmlEntities($_POST['password']);
-            if ((preg_match('/.{6,100}/', $pass) == 0) || (preg_match('/[0-9]/', $pass) == 0) || (preg_match('/[a-zA-Z]/', $pass) == 0))
-            {
-                $result = "<p style='padding: 20px; color: red'>Password must contain atleast one digit: </p>";
-            }
-            else{
-                $password = $pass;
-                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-            try{
-
-                $sqlInsert = "INSERT INTO users (fname, lname, username, email, password, join_date)
-                    VALUES (:fname, :lname, :username, :email, :password, now())";
-
-                $statement = $db->prepare($sqlInsert);
-                $statement->execute(array(
-                'fname' => $fname,
-                'lname' => $lname,
-                ':username' => $username,
-                ':email' => $email,
-                ':password' => $hashed_password
-                ));
-
-$salt = bin2hex(openssl_random_pseudo_bytes(16));
-$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-$code = substr(str_shuffle($chars), 0, 35);
-$link = "http://localhost:8080/camagru/verify.php?q=".$code;
-$mailbody = '
-Thanks for signing up to camagru!
-
-Your account has been created, you can login with the following credentials after you have activated your account with the key code
-provided below, use the link to connect you to the code fill in form.
-------------------------
-Username: '.$username.'
-Password: '.$password.'
-Key     : '.$code.'
-------------------------
-
-Please click/copy and paste this
-link to submit the Key provided above:
-key::'.$link.'';
-
-mail("$email", "noreply@camagru - Account Activation", $mailbody);
-
-
-$query = $db->prepare('UPDATE users SET link = :link WHERE username = :username');
-$query->bindParam(':link', $code);
-$query->bindParam(':username', $username);
-$query->execute();
-
-if ($statement->rowCount() == 1){
-$result = "<p style='padding: 20px; color: green;'>Please check your Email to verify your account</p>";
-}
-}catch (PDOException $er){
-$result = "<p style='padding: 20px; color: red'>An error occurred: ".$er->getMessage()." </p>";
-}
-}
-}
-else{
-if(count($form_errors) == 1){
-$result = "<p style='color: red;'> There was 1 error in the form<br>";
-    }else{
-    $result = "<p style='color: red;'> There were " .count($form_errors). " error in the form <br>";
-    }
-    }
-    }
-
-    ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="utf-8">
+    <title>Camagru</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli%7CRoboto:400,300,500,700,900" rel="stylesheet"></head>
+<body>
+<header>
+
+<div class="main-nav">
+    <ul class="nav">
+        <li class="name">CAMAGRU</li>
+        <li><a href="../login.php">Login</a></li>
+        <li><a href="registration.php">Register</a></li>
+        <li><a href="../snap.php">Snap</a></li>
+        <li><a href="../gallery.php">Gallery</a></li>
+    </ul>
+</div>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -106,9 +35,9 @@ $result = "<p style='color: red;'> There was 1 error in the form<br>";
 
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-
     <link href="css/main.css" rel="stylesheet" media="all">
+
+
 </head>
 
 <body>
@@ -119,7 +48,7 @@ $result = "<p style='color: red;'> There was 1 error in the form<br>";
                     <h2 class="title">Registration Form</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" action="registration.php">
                         <div class="form-row m-b-55">
                             <div class="name">Name</div>
                             <div class="value">
@@ -151,7 +80,7 @@ $result = "<p style='color: red;'> There was 1 error in the form<br>";
                             <div class="name">Username</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" name="company">
+                                    <input class="input--style-5" type="text" name="username">
                                 </div>
                             </div>
                         </div>
@@ -159,7 +88,7 @@ $result = "<p style='color: red;'> There was 1 error in the form<br>";
                             <div class="name">Password</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="email" name="email">
+                                    <input class="input--style-5" type="password" name="password">
                                 </div>
                             </div>
                         </div>
@@ -185,3 +114,92 @@ $result = "<p style='color: red;'> There was 1 error in the form<br>";
 </body>
 
 </html>
+
+<?php
+include_once ('config/database.php');
+include_once 'error_checking.php';
+
+if (!empty($_POST)){
+
+    var_dump(check_empty_fields($required_fields));
+    //$form_errors = array();
+    //$required_fields = array('fname', 'lname', 'email', 'username', 'password');
+    // $form_errors = array_merge($form_errors, check_empty_fields($required_fields));
+    $fields_to_check_length = array('username' => 4, 'password' => 6);
+    // * $form_errors = array_merge($form_errors, check_min_length($fields_to_check_length));
+    // * $form_errors = array_merge($form_errors, check_email($_POST));
+    print("Hello there!");
+////    if (empty($form_errors)){
+////
+////        $fname = htmlEntities($_POST['fname']);
+////        $lname = htmlEntities($_POST['lname']);
+////        $username = htmlEntities($_POST['username']);
+////        $email = htmlEntities($_POST['email']);
+////        $pass = htmlEntities($_POST['password']);
+////        if ((preg_match('/.{6,100}/', $pass) == 0) || (preg_match('/[0-9]/', $pass) == 0) || (preg_match('/[a-zA-Z]/', $pass) == 0))
+////        {
+////            $result = "<p style='padding: 20px; color: red'>Password must contain atleast one digit: </p>";
+////        }
+////        else{
+////            $password = $pass;
+////            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+////
+////            try{
+////
+////                $sqlInsert = "INSERT INTO users (fname, lname, username, email, password, join_date)
+////                    VALUES (:fname, :lname, :username, :email, :password, now())";
+////
+////                $statement = $db->prepare($sqlInsert);
+////                $statement->execute(array(
+////                    'fname' => $fname,
+////                    'lname' => $lname,
+////                    ':username' => $username,
+////                    ':email' => $email,
+////                    ':password' => $hashed_password
+////                ));
+////
+////                $salt = bin2hex(openssl_random_pseudo_bytes(16));
+////                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+////                $code = substr(str_shuffle($chars), 0, 35);
+////                $link = "http://localhost:8080/camagru/verify.php?q=".$code;
+////                $mailbody = '
+////Thanks for signing up to camagru!
+////
+////Your account has been created, you can login with the following credentials after you have activated your account with the key code
+////provided below, use the link to connect you to the code fill in form.
+////------------------------
+////Username: '.$username.'
+////Password: '.$password.'
+////Key     : '.$code.'
+////------------------------
+////
+////Please click/copy and paste this
+////link to submit the Key provided above:
+////key::'.$link.'';
+////
+////                mail("$email", "noreply@camagru - Account Activation", $mailbody);
+////
+////
+////                $query = $db->prepare('UPDATE users SET link = :link WHERE username = :username');
+////                $query->bindParam(':link', $code);
+////                $query->bindParam(':username', $username);
+////                $query->execute();
+////
+////                if ($statement->rowCount() == 1){
+////                    $result = "<p style='padding: 20px; color: green;'>Please check your Email to verify your account</p>";
+////                }
+////            }catch (PDOException $er){
+////                $result = "<p style='padding: 20px; color: red'>An error occurred: ".$er->getMessage()." </p>";
+////            }
+////        }
+////    }
+////    else {
+////        if(count($form_errors) == 1){
+////            $result = "<p style='color: red;'> There was 1 error in the form<br>";
+////        }else{
+////            $result = "<p style='color: red;'> There were " .count($form_errors). " error in the form <br>";
+////        }
+////    }
+}
+
+?>
